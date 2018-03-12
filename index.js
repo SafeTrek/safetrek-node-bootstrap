@@ -56,6 +56,7 @@ app.get('/', function (req, res) {
         res.redirect(`${redirectUrl}?access_token=${response.body.access_token}&refresh_token=${response.body.refresh_token}`)
       }
     })
+  res.status(500).send('Internal Server Error. Something went wrong. Please try again')
 })
 
 app.listen(port, () => { log(`Listening on port ${port}`) })
