@@ -52,11 +52,13 @@ app.get('/', function (req, res) {
       'redirect_uri': appUrl
     })
     .end((response) => {
+      log(response.body)
       if(response.body.access_token && response.body.refresh_token) {
         res.redirect(`${redirectUrl}?access_token=${response.body.access_token}&refresh_token=${response.body.refresh_token}`)
+      } else {
+        res.status(500).send('Internal Server Error. Something went wrong. Please try again')
       }
     })
-  res.status(500).send('Internal Server Error. Something went wrong. Please try again')
 })
 
 app.listen(port, () => { log(`Listening on port ${port}`) })
