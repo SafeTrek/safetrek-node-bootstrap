@@ -43,14 +43,12 @@ app.get('/', function (req, res) {
   let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
   let redirectUrl = REDIRECT_URL || DEMO_URL
   unirest.post(TOKEN_URL)
-    .headers({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic base64(joZXQTA1wbsq5dX12sI9JfF1CXW7h3AK:6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-FMPSg8M)'
-    })
+    .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
     .send({
       'grant_type': 'authorization_code',
       'code': req.query.code,
+      'client_id': CLIENT_ID || env.CLIENT_ID,
+      'client_secret': CLIENT_SECRET || env.CLIENT_SECRET,
       'redirect_uri': appUrl
     })
     .end((response) => {
