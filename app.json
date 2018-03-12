@@ -20,7 +20,7 @@
       "required": true
     },
     "REDIRECT_URL": {
-      "description": "The URL you want to redirect to after retrieving your 'access_token' and 'refresh_token'",
+      "description": "The URL you want to redirect to after retrieving your 'access_token' and 'refresh_token'. Leave blank if you're not sure or want to use the Demo redirect URL.",
       "required": false
     }
   }
