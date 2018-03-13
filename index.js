@@ -52,7 +52,7 @@ app.get('/', function (req, res) {
       'redirect_uri': appUrl
     })
     .end((response) => {
-      log(response.body)
+      log(req, response.body)
       if(response.body.access_token && response.body.refresh_token) {
         res.redirect(`${redirectUrl}?access_token=${response.body.access_token}&refresh_token=${response.body.refresh_token}`)
       } else {
