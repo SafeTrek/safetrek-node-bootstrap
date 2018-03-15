@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+      <a href="./index.html" class="brand-logo">
+        <img src="./assets/images/safetrek-logo-white.png" alt="SafeTrek">
+      </a>
+      <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li class='active'><a href="./index.html">Demo</a></li>
+        <li><a target='_blank' href="https://github.com/SafeTrek/safetrek-node-bootstrap">Source</a></li>
+        <li><a target='_blank' href="https://docs.safetrek.io">Docs</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-nav">
+        <li class='active'><a href="./index.html">Demo</a></li>
+        <li><a target='_blank' href="https://github.com/SafeTrek/safetrek-node-bootstrap">Source</a></li>
+        <li><a target='_blank' href="https://docs.safetrek.io">Docs</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+          <p class="flow-text">This demo and the underlying app can be used to simplify, understand and debug the authorization flow used by SafeTrek API.
+            You can bootstrap your projects with this app to quickly set them up for consuming the SafeTrek API. </p>
+          <div class="section">
+            <h5 class='grey-text text-darken-1'>Step 1</h5>
+            <div class='divider'></div>
+            <p>
+              First step is to request SafeTrek to authenticate our app and our user by providing us with an authorization <code>code</code>.
+              The code will then be exchanged by this app with SafeTrek authorization server for an <code>access_token</code> and a <code>refresh_token</code>.
+            </p>
+            <div class='center-align'>
+              <a class='safetrek-btn' href='#'>
+                <img class='responsive-img' src='./assets/images/safetrek-connect-button.png' alt='Connect to SafeTrek'>
+              </a>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+          <div class="section">
+            <h5 class='grey-text text-darken-1'>Step 2</h5>
+            <div class='divider'></div>
+            <p>
+              Once we have the access and refresh tokens, we can use the <code>refresh_token</code> to get a new <code>access_token</code>.
+              This is useful because access tokens have limited validity, while refresh tokens don't expire. Make sure to keep your refresh tokens safe.
+              Access tokens are used frequently in the headers for making secure requests and hence are prone to theft and misuse. Limited validity thus makes them secure.
+            </p>
+            <div>
+              <code>refresh_token</code> <input type="text" value='eanaljhd9a7ryh3our2398hfn2398fb23nu9fb823n9fn'>
+              <code>access_token</code> <input type="text">
+              <button class="btn waves-effect waves-light" type="button">Get New</button>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="section">
+              <h5 class='grey-text text-darken-1'>Step 3</h5>
+              <div class='divider'></div>
+              <p>
+                Let's use the <code>access_token</code> to make a secure call to SafeTrek on behalf of our user.
+                In this step, we will create an alarm for our authorized user.
+                We will be using the sandbox server for this example request.
+                The coordinates used are fake but you can use Geolocation to provide your own location if you want.
+              </p>
+              <div class="row">
+                <div class="col s12 m6">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="card-title">Request</div>
+                      <code>
+                        <pre>
+POST https://api-sandbox.safetrek.io/v1/alarms
+Authorization: Bearer <span class='access_token'></span>
+Content-Type: application/json
+
+{
+  "services": {
+    "police": true,
+    "fire": false,
+    "medical": false
+  },
+  "location.coordinates": {
+    "lat": 34.32334,
+    "lng": -117.3343,
+    "accuracy": 5
+  }
+}
+                        </pre>
+                      </code>
+                    </div>
+                    <div class="card-action">
+                      <a class='blue-text text-darken-3' href="#">Use Geolocation</a>
+                      <br class='hide-on-med-and-up'>
+                      <a class='blue-text text-darken-3' href="#">Make Request</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card">
+                      <div class="card-content center-align">
+                        <div class="card-title">Alarm Status</div>
+                          <div class='alarm'></div>
+                          <p class='alarm-status'>
+                            
+                          </p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

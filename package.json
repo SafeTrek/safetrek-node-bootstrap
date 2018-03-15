@@ -18,6 +18,7 @@
   "homepage": "https://github.com/SafeTrek/safetrek-node-bootstrap#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
     "unirest": "^0.5.1"
   }
 }

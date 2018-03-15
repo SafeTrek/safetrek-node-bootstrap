@@ -37,12 +37,15 @@ app.use((req, res, next) => {
   }
 })
 
+// Heroku proxies requests to add SSL layer.
+// Enabling this ensures reporting of proper protocol.
 app.enable('trust proxy')
+
+app.use(express.static('./public/'))
 
 app.use(express.json())
 
 app.get('/', function (req, res) {
-  log(req.secure, req.protocol)
   let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
   let redirectUrl = REDIRECT_URL || DEMO_URL
   unirest.post(TOKEN_URL)
@@ -56,7 +59,7 @@ app.get('/', function (req, res) {
     })
     .end((response) => {
       log(response.body)
-      if(response.body.access_token && response.body.refresh_token) {
+      if(response.body.access_token && response.body.refresh_token && redirectUrl) {
         res.redirect(`${redirectUrl}?access_token=${response.body.access_token}&refresh_token=${response.body.refresh_token}`)
       } else {
         res.status(500).send('Internal Server Error. Something went wrong. Please try again')
