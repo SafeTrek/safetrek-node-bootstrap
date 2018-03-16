@@ -35,6 +35,8 @@ $(function(){
     log('SafeTrek is connected!', state)
     $('a.safetrek-btn > img').attr('src', '/assets/images/safetrek-disconnect-button.png')
     $('input#authorization_code').val(state.get('authorization_code'))
+    $('input#access_token').val(state.get('access_token'))
+    $('input#refresh_token').val(state.get('refresh_token'))
   }
 
   $('input.display-only').on('blur', function() {
