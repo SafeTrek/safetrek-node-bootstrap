@@ -1,6 +1,7 @@
 {
   "name": "SafeTrek Node Bootstrap",
   "description": "A bootstrap project to quickly get you started with the SafeTrek API using NodeJS.",
+  "logo": "https://www.dropbox.com/s/q2m61cpfm5w0cm4/safetrek-app-icon.png?raw=1",
   "keywords": [
     "safetrek",
     "oauth",
