@@ -1,8 +1,13 @@
 $(function(){
 
+  const SAFETREK_API_URL =  'https://api-sandbox.safetrek.io/v1/alarms'
+  const DEFAULT_ACCURACY =  5
+  const RANDOM_ADDRESS_DATA = '/address-us-100.min.json'
+
   const ls = localStorage
   const log = console.log
   const logErr = console.error
+  const logWarn = console.warn
   let state = new Map
   const setState = (key, val, verbose = false) => {
     ls.setItem(key, val)
@@ -21,7 +26,6 @@ $(function(){
   state.set('authorization_code', ls.getItem('authorization_code') || '')
   state.set('refresh_token', ls.getItem('refresh_token') || '')
   state.set('access_token', ls.getItem('access_token') || '')
-  //TODO: Get new access_token
 
   // Materialize Components Initialization
   $('.button-collapse').sideNav()
@@ -41,13 +45,15 @@ $(function(){
     $('input#access_token').val(state.get('access_token'))
     $('input#refresh_token').val(state.get('refresh_token'))
   } else {
-    log('SafeTrek is not connected! Current State:\n', state)
+    logWarn('SafeTrek is not connected! Current State:\n', state)
   }
 
+  // Prevent changing code and token field values
   $('input.display-only').on('blur', function() {
     $(this).val(state.get($(this).attr('id')))
   })
 
+  // Disconnect from SafeTrek. Clear all data and reload page.
   $('a.safetrek-btn').on('click', function(e){
     if(state.get('status') !== 'disconnected') {
       e.preventDefault()
@@ -56,6 +62,7 @@ $(function(){
     }
   })
 
+  // Exchange refresh_token for new access_token
   $('.new-token').on('click', function() {
     let that = $(this)
     that.prop('disabled', true)
@@ -74,39 +81,97 @@ $(function(){
 
   $('a.make-alarm-request').on('click', function(e) {
     e.preventDefault()
-    if(state.get('status') !== 'processing') {
-      state.set('status', 'processing')
-      let url = 'https://api-sandbox.safetrek.io/v1/alarms'
-      let data = $('code.alarm-request').text()
-      log('Requesting Alarm creation with data:\n', data)
-      $.ajax({
-        url: url,
-        type: 'post',
-        headers: {
-          'Authorization': `Bearer ${state.get('access_token')}`
-        },
-        contentType: 'application/json',
-        dataType: 'json',
-        data: data,
-        success: (data) => {
-          log('Alarm created successfully! Server response:\n', JSON.stringify(data, null, 2))
-        },
-        error: (xhr, status, err) => { logErr('Error:', err) },
-        complete: () => { state.set('status', 'connected') }
-      })
+    if (state.get('status') === 'active-alarm') {
+      log('Alarm status is currently active and will reset in 10s or less.')
+    } else if(state.get('status') !== 'processing') {
+      if(state.get('access_token')) {
+        $('.alarm').removeClass('alarm-red')
+        $('.alarm-status').text('Requesting...')
+        state.set('status', 'processing')
+        let url = SAFETREK_API_URL
+        let data = $('code.alarm-request').text()
+        log('Requesting Alarm creation with data:\n', data)
+        $.ajax({
+          url: url,
+          type: 'post',
+          headers: {
+            'Authorization': `Bearer ${state.get('access_token')}`
+          },
+          contentType: 'application/json',
+          dataType: 'json',
+          data: data,
+          success: (data) => {
+            log('Alarm created successfully! Server response:\n', JSON.stringify(data, null, 2), '\nAlarm status will reset in 10s.')
+            $('.alarm').addClass('alarm-red')
+            $('.alarm-status').text('Alarm created! Check console for JSON response.')
+          },
+          error: (xhr, status, err) => { logErr('Error:', err) },
+          complete: () => {
+            state.set('status', 'active-alarm')
+            setTimeout(() => {
+              state.set('status', 'connected')
+              $('.alarm').removeClass('alarm-red')
+              $('.alarm-status').text('')
+              log('Alarm status reset!')
+            }, 10000)
+          }
+        })
+      } else {
+        logErr('No valid access_token found! Connect to SafeTrek before requesting Alarm creation.')
+      }
     }
   })
 
-  $('a.use-geo').on('click', function(e) {
+  $('.use-addr').on('click', function(e) {
     e.preventDefault()
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {log(pos)},
-        (posErr) => {logErr(posErr)}
-      )
-    } else {
-      log('Geolocation is not available on this browser.')
-    }
+    let that = $(this)
+    $.getJSON('/address-us-100.min.json', (data) => {
+      const addresses = data.addresses
+      const randomAddress = addresses[Math.floor(Math.random() * addresses.length)]
+      let responseJSON = {
+        "services": {
+          "police": true,
+          "fire": false,
+          "medical": false
+        },
+        "location.address": {
+          "line1": randomAddress.address1,
+          "line2": randomAddress.address2,
+          "city": randomAddress.city,
+          "state": randomAddress.state,
+          "zip": randomAddress.postalCode
+        }
+      }
+      $('code.alarm-request').text(JSON.stringify(responseJSON, null, 2))
+      that.addClass('hide')
+      $('.use-coords').removeClass('hide')
+      log('Using random location address.')
+    })
+  })
+
+  $('.use-coords').on('click', function(e) {
+    e.preventDefault()
+    let that = $(this)
+    $.getJSON(RANDOM_ADDRESS_DATA, (data) => {
+      const addresses = data.addresses
+      const randomAddress = addresses[Math.floor(Math.random() * addresses.length)]
+      let responseJSON = {
+        "services": {
+          "police": true,
+          "fire": false,
+          "medical": false
+        },
+        "location.coordinates": {
+          "lat": randomAddress.coordinates.lat,
+          "lng": randomAddress.coordinates.lng,
+          "accuracy": DEFAULT_ACCURACY
+        }
+      }
+      $('code.alarm-request').text(JSON.stringify(responseJSON, null, 2))
+      that.addClass('hide')
+      $('.use-addr').removeClass('hide')
+      log('Using random location coordinates.')
+    })
   })
 
 })

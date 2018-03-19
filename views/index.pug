@@ -9,18 +9,19 @@ html
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css')
     link(rel='stylesheet' type='text/css' media='screen' href='/styles/main.css')
   body
-    nav
-      .nav-wrapper
-        a.brand-logo(href='/demo')
-          img(src='/assets/images/safetrek-logo-white.png' alt='SafeTrek')
-        a.button-collapse(href='#' data-activates='mobile-nav')
-          i.material-icons menu
-        ul#nav-mobile.right.hide-on-med-and-down
-          li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
-          li: a(target='_blank' href='https://docs.safetrek.io') Docs
-        ul#mobile-nav.side-nav
-          li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
-          li: a(target='_blank' href='https://docs.safetrek.io') Docs
+    .navbar-fixed
+      nav
+        .nav-wrapper
+          a.brand-logo(href='/demo')
+            img(src='/assets/images/safetrek-logo-white.png' alt='SafeTrek')
+          a.button-collapse(href='#' data-activates='mobile-nav')
+            i.material-icons menu
+          ul#nav-mobile.right.hide-on-med-and-down
+            li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
+            li: a(target='_blank' href='https://docs.safetrek.io') Docs
+          ul#mobile-nav.side-nav
+            li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
+            li: a(target='_blank' href='https://docs.safetrek.io') Docs
     .container
       .row
         .col.s12
@@ -77,7 +78,7 @@ html
               |  to make a secure requests to SafeTrek on behalf of your user.
               | In this step, you will create an alarm for your authorized user.
               | The sandbox server will be used for this example request.
-              | The coordinates used are fake but you can use your browser's Geolocation to provide your own location if you want.
+              | Locations used are random and based off of a static JSON data source.
               | Errors and state changes are logged to the console.
             .row
               .col.s12.m6
@@ -103,9 +104,10 @@ html
                           "lng": -117.3343,
                           "accuracy": 5
                         }
-                      }                                               
+                      }
                   .card-action
-                    a.blue-text.text-darken-3.use-geo(href='#') Use Geolocation
+                    a.blue-text.text-darken-3.use-addr(href='#') Use Address
+                    a.blue-text.text-darken-3.use-coords.hide(href='#') Use Coordinates
                     br.hide-on-med-and-up
                     a.blue-text.text-darken-3.make-alarm-request(href='#') Make Request
               .col.s12.m6

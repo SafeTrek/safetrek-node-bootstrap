@@ -18,8 +18,13 @@
   width: 200px;
   border-bottom-left-radius: 50%;
   border-bottom-right-radius: 50%;
-  background-color: #3f51b5; /* ff5353 */
+  background-color: #3f51b5;
   box-shadow: 0 0 12px 0 #3f51b5;
+}
+
+.alarm-red {
+  background-color: #ff5353;
+  box-shadow: 0 0 12px 0 #ff5353;
 }
 
 footer {
