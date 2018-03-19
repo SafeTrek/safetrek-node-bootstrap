@@ -37,7 +37,7 @@ html
               code access_token
               |  and a 
               code refresh_token
-              | .
+              | . The retrieved code and tokens will be available for your reference in Step 2.
             .row
               .col.s12.m4.offset-m4.center-align
                 a.safetrek-btn(href=auth_url)
@@ -45,8 +45,6 @@ html
                 .connecting.hide
                   h5.blue-text.text-darken-4 Connecting...
                   .progress.blue.darken-3: .indeterminate.blue.darken-1
-            code authorization_code
-            input#authorization_code.display-only(type='text')
       .row
         .col.s12
           .section
@@ -55,16 +53,19 @@ html
             p
               | Once you have the access and refresh tokens, you can use the 
               code refresh_token
-              | to get a new 
+              |  to get a new 
               code access_token
               | . This is useful because access tokens have limited validity, while refresh tokens don't expire. Make sure to keep your refresh tokens safe.
               | Access tokens are used frequently in the headers for making secure requests and hence are prone to theft and misuse. Limited validity thus makes them secure.
+              | Errors and state changes are logged to the console.
             div
+              code authorization_code
+              input#authorization_code.display-only(type='text')
               code refresh_token
               input#refresh_token.display-only(type='text')
               code access_token
               input#access_token.display-only(type='text')
-              button.btn.waves-effect.waves-light(type='button') Get New
+              button.btn.waves-effect.waves-light.new-token(type='button') Get New
       .row
         .col.s12
           .section
@@ -77,6 +78,7 @@ html
               | In this step, you will create an alarm for your authorized user.
               | The sandbox server will be used for this example request.
               | The coordinates used are fake but you can use your browser's Geolocation to provide your own location if you want.
+              | Errors and state changes are logged to the console.
             .row
               .col.s12.m6
                 .card
@@ -87,7 +89,9 @@ html
                       POST https://api-sandbox.safetrek.io/v1/alarms
                       Authorization: Bearer                         
                       Content-Type: application/json
-                      
+
+
+                    code.alarm-request.
                       {
                         "services": {
                           "police": true,
@@ -99,12 +103,11 @@ html
                           "lng": -117.3343,
                           "accuracy": 5
                         }
-                      }
-                                                                        
+                      }                                               
                   .card-action
-                    a.blue-text.text-darken-3(href='#') Use Geolocation
+                    a.blue-text.text-darken-3.use-geo(href='#') Use Geolocation
                     br.hide-on-med-and-up
-                    a.blue-text.text-darken-3(href='#') Make Request
+                    a.blue-text.text-darken-3.make-alarm-request(href='#') Make Request
               .col.s12.m6
                 .card
                   .card-content.center-align

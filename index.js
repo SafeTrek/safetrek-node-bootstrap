@@ -39,10 +39,10 @@ const SCOPE = 'openid phone offline_access'
 const RESPONSE_TYPE = 'code'
 
 // Enter your SafeTrek client id.
-const CLIENT_ID = ''
+const CLIENT_ID = 'joZXQTA1wbsq5dX12sI9JfF1CXW7h3AK'
 
 // Enter your client secret.
-const CLIENT_SECRET = ''
+const CLIENT_SECRET = '6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-FMPSg8M'
 
 // Enter where you want to redirect after retrieving your 'access_token' and 'refresh_token'.
 // For debugging, you can set this to be a RequestBin URL from https://requestb.in
@@ -75,25 +75,24 @@ app.use(express.json())
 app.get('/demo', function (req, res) {
   let appUrl = `${req.protocol}://${req.get('host')}`
   let client_id = CLIENT_ID || env.CLIENT_ID || ''
+  let client_secret = CLIENT_SECRET || env.CLIENT_SECRET || ''
   res.render('index', {
     auth_url: `${AUTH_URL}/authorize?audience=${API_URL}&client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
   })
 })
 
 app.get('/', function (req, res) {
-  if(!req.query.code) {
-    res.status(422).send('Unprocessable Entity. A required parameter is missing.')
-  } else {
+  if(req.query.code) {
     let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
     let redirectUrl = REDIRECT_URL || env.REDIRECT_URL || DEMO_URL
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
       .send({
-        'grant_type': 'authorization_code',
-        'code': req.query.code,
-        'client_id': CLIENT_ID || env.CLIENT_ID || '',
-        'client_secret': CLIENT_SECRET || env.CLIENT_SECRET || '',
-        'redirect_uri': appUrl
+        "grant_type": "authorization_code",
+        "code": req.query.code,
+        "client_id": CLIENT_ID || env.CLIENT_ID || "",
+        "client_secret": CLIENT_SECRET || env.CLIENT_SECRET || "",
+        "redirect_uri": appUrl
       })
       .end((response) => {
         log(response.body)
@@ -103,6 +102,27 @@ app.get('/', function (req, res) {
           res.status(500).send('Internal Server Error. Something went wrong. Please try again')
         }
       })
+  } else if(req.query.refresh_token) {
+    unirest.post(TOKEN_URL)
+      .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+      .send({
+        "grant_type": "refresh_token",
+        "refresh_token": req.query.refresh_token,
+        "client_id": CLIENT_ID || env.CLIENT_ID || "",
+        "client_secret": CLIENT_SECRET || env.CLIENT_SECRET || ""
+      })
+      .end((response) => {
+        if(response.body.access_token && response.body.expires_in) {
+          res.json({
+            access_token: response.body.access_token,
+            expires_in: response.body.expires_in
+          })
+        } else {
+          res.status(500).send('Internal Server Error. Something went wrong. Please try again')
+        }
+      })
+  } else {
+    res.status(422).send('Unprocessable Entity. A required parameter is missing.')
   }
 })
 

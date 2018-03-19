@@ -6,9 +6,8 @@ POST https://login-sandbox.safetrek.io/oauth/token HTTP/1.1
 Content-Type: application/json
 
 {
-  "grant_type": "authorization_code",
-  "code": "TqroiDg8FTa9K55t",
+  "grant_type": "refresh_token",
+  "refresh_token": "lvUvRxP5_dGClkR5Rvh0ofhI1KwhPOjGaWwHq8_eaI8kY",
   "client_id": "joZXQTA1wbsq5dX12sI9JfF1CXW7h3AK",
-  "client_secret": "6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-FMPSg8M",
-  "redirect_uri": "https://stnb-test.herokuapp.com"
+  "client_secret": "6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-FMPSg8M"
 }
