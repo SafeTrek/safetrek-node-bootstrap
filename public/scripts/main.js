@@ -1,5 +1,6 @@
 $(function(){
 
+  const CALLBACK_URL =  '/callback'
   const SAFETREK_API_URL =  'https://api-sandbox.safetrek.io/v1/alarms'
   const DEFAULT_ACCURACY =  5
   const RANDOM_ADDRESS_DATA = '/address-us-100.min.json'
@@ -66,7 +67,7 @@ $(function(){
   $('.new-token').on('click', function() {
     let that = $(this)
     that.prop('disabled', true)
-    let url = `/?refresh_token=${state.get('refresh_token')}`
+    let url = `${CALLBACK_URL}?refresh_token=${state.get('refresh_token')}`
     $.ajax({
       url: url,
       dataType: 'json',
@@ -125,7 +126,7 @@ $(function(){
   $('.use-addr').on('click', function(e) {
     e.preventDefault()
     let that = $(this)
-    $.getJSON('/address-us-100.min.json', (data) => {
+    $.getJSON(RANDOM_ADDRESS_DATA, (data) => {
       const addresses = data.addresses
       const randomAddress = addresses[Math.floor(Math.random() * addresses.length)]
       let responseJSON = {

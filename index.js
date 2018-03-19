@@ -49,7 +49,7 @@ const CLIENT_SECRET = '6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-
 const REDIRECT_URL = ''
 
 // OAuth demo URL. Will be used as REDIRECT_URL if none is provided.
-const DEMO_URL = '/demo'
+const DEMO_URL = '/'
 
 
 // Middleware to filter all but GET method requests
@@ -72,7 +72,7 @@ app.set('view engine', 'pug')
 // Middleware to parse JSON data in requests
 app.use(express.json())
 
-app.get('/demo', function (req, res) {
+app.get(DEMO_URL, function (req, res) {
   let appUrl = `${req.protocol}://${req.get('host')}`
   let client_id = CLIENT_ID || env.CLIENT_ID || ''
   let client_secret = CLIENT_SECRET || env.CLIENT_SECRET || ''
@@ -81,7 +81,7 @@ app.get('/demo', function (req, res) {
   })
 })
 
-app.get('/', function (req, res) {
+app.get('/callback', function (req, res) {
   if(req.query.code) {
     let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
     let redirectUrl = REDIRECT_URL || env.REDIRECT_URL || DEMO_URL
