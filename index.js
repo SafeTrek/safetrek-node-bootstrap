@@ -92,7 +92,11 @@ app.get(DEMO_URL, function (req, res) {
 app.get(CALLBACK_PATH, function (req, res) {
   if(req.query.code) {
     let appUrl = `${req.protocol}://${req.get('host')}${CALLBACK_PATH}`
-    let redirectUrl = REDIRECT_URL || env.REDIRECT_URL || DEMO_URL
+    let redirectUrl =  REDIRECT_URL || env.REDIRECT_URL || ''
+    let responseUrl =  redirectUrl || DEMO_URL
+    // Pass authorization_code in query parameters for demo app only
+    let showAuthcode = redirectUrl ? true : false
+
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
       .send({
@@ -104,7 +108,12 @@ app.get(CALLBACK_PATH, function (req, res) {
       })
       .end((response) => {
         if(response.body.access_token && response.body.refresh_token && response.body.expires_in && redirectUrl) {
-          res.redirect(`${redirectUrl}?authorization_code=${req.query.code}&access_token=${response.body.access_token}&expires_in=${response.body.expires_in}&refresh_token=${response.body.refresh_token}`)
+          let redirectLink = responseUrl
+          redirectLink += `access_token=${response.body.access_token}`
+          redirectLink += `&expires_in=${response.body.expires_in}`
+          redirectLink += `&refresh_token=${response.body.refresh_token}`
+          redirectLink += showAuthcode ? `authorization_code=${req.query.code}` : '' // For demo app only
+          res.redirect(redirectLink)
         } else {
           res.status(500).send('Internal Server Error. Something went wrong. Please try again')
         }
