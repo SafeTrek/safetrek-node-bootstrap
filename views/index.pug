@@ -3,38 +3,36 @@ html
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    title SafeTrek Node Bootstrap Demo
+    title #{company_name} Node Bootstrap Demo
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css')
     link(rel='stylesheet' type='text/css' media='screen' href='/styles/main.css')
   body
     .navbar-fixed
       nav
         .nav-wrapper
-          a.brand-logo(href='/demo')
-            img(src='/assets/images/safetrek-logo-white.png' alt='SafeTrek')
+          a.brand-logo(href='#!')
+            img(src='/assets/images/safetrek-logo-white.png' alt='#{company_name}')
           a.button-collapse(href='#' data-activates='mobile-nav')
             i.material-icons menu
-          ul#nav-mobile.right.hide-on-med-and-down
+          ul.right.hide-on-med-and-down
             li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
             li: a(target='_blank' href='https://docs.safetrek.io') Docs
-          ul#mobile-nav.side-nav
-            li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
-            li: a(target='_blank' href='https://docs.safetrek.io') Docs
+    ul#mobile-nav.side-nav
+      li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
+      li: a(target='_blank' href='https://docs.safetrek.io') Docs
     .container
       .row
         .col.s12
           p.flow-text
-            | This demo and the underlying app can be used to simplify, understand and debug the authorization flow used by SafeTrek API.
-            | You can bootstrap your projects with this app to quickly set them up for consuming the SafeTrek API.
+            | This demo and the underlying app can be used to simplify, understand and debug the authorization flow used by #{company_name} API.
+            | You can bootstrap your projects with this app to quickly set them up for consuming the #{company_name} API.
           .section
             h5.grey-text.text-darken-1 Step 1
             .divider
             p
-              | First step is to request SafeTrek to authenticate your app and your user by providing you with an 
+              | First step is to request #{company_name} to authenticate your app and your user by providing you with an 
               code authorization_code
-              | . The code will then be exchanged by this app with SafeTrek authorization server for an 
+              | . The code will then be exchanged by this app with #{company_name} authorization server for an 
               code access_token
               |  and a 
               code refresh_token
@@ -42,7 +40,7 @@ html
             .row
               .col.s12.m4.offset-m4.center-align
                 a.safetrek-btn(href=auth_url)
-                  img.responsive-img(src='/assets/images/safetrek-connect-button.png' alt='Connect to SafeTrek')
+                  img.responsive-img(src='/assets/images/safetrek-connect-button.png' alt='Connect to #{company_name}')
                 .connecting.hide
                   h5.blue-text.text-darken-4 Connecting...
                   .progress.blue.darken-3: .indeterminate.blue.darken-1
@@ -75,7 +73,7 @@ html
             p
               | Now you can use the 
               code access_token
-              |  to make a secure requests to SafeTrek on behalf of your user.
+              |  to make a secure requests to #{company_name} on behalf of your user.
               | In this step, you will create an alarm for your authorized user.
               | The sandbox server will be used for this example request.
               | Locations used are random and based off of a static JSON data source.
@@ -116,6 +114,30 @@ html
                     .card-title Alarm Status
                     .alarm
                     p.alarm-status
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js')
+      .row
+        .col.s12
+          .section
+            h5.grey-text.text-darken-1 Next Steps
+            .divider
+            p.
+              Hope this demo helped you understand the authorization process for the #{company_name} API.
+              Here's what you can do next:-
+
+            ul
+              li - Take a look at the code under the hood to figure out how it's all been put together.
+              li - Check out the developer documentation from the nav menu to learn more about the #{company_name} API.
+              li - Tinker around with the demo or replace it with your own app.
+
+            p.
+              Go ahead and build some awesome apps with #{company_name} API, but don't forget to share it with us.
+              We would love to see what you come up with and the creative ways in which you use our API.
+            
+            p Have fun!
+
+      footer
+        .divider
+        p.center-align
+          | Built with ♥ at 
+          a(href='https://www.safetrekapp.com/' target='_blank') #{company_name}
+            
     script(src='/scripts/main.js')

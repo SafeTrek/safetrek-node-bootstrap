@@ -74,7 +74,7 @@ app.use((req, res, next) => {
 app.enable('trust proxy')
 
 // Enabling Pug templating
-app.set('views', './views')
+app.set('views', 'views')
 app.set('view engine', 'pug')
 
 // Middleware to parse JSON data in requests
@@ -84,6 +84,7 @@ app.get(DEMO_URL, function (req, res) {
   let appUrl = `${req.protocol}://${req.get('host')}${CALLBACK_PATH}`
   let client_id = CLIENT_ID || env.CLIENT_ID || ''
   res.render('index', {
+    company_name: 'SafeTrek',
     auth_url: `${AUTH_URL}/authorize?audience=${API_URL}&client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
   })
 })
@@ -135,4 +136,4 @@ app.get(CALLBACK_PATH, function (req, res) {
 // Fallback to public for loading assets
 app.use(express.static('./public/'))
 
-app.listen(port, () => { log(`Listening on port ${port}`) })
+app.listen(port, () => { log(`Node (Express) server started on port ${port}`) })
