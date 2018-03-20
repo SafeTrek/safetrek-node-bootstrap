@@ -53,6 +53,7 @@ const CLIENT_ID = ''
 const CLIENT_SECRET = ''
 
 // Enter where you want to redirect after retrieving your 'access_token' and 'refresh_token'.
+// Should have trailing slash
 // For debugging, you can set this to be a RequestBin URL from https://requestb.in
 const REDIRECT_URL = ''
 
@@ -108,7 +109,7 @@ app.get(CALLBACK_PATH, function (req, res) {
       })
       .end((response) => {
         if(response.body.access_token && response.body.refresh_token && response.body.expires_in && responseUrl) {
-          let redirectLink = responseUrl
+          let redirectLink = `responseUrl?`
           redirectLink += `access_token=${response.body.access_token}`
           redirectLink += `&expires_in=${response.body.expires_in}`
           redirectLink += `&refresh_token=${response.body.refresh_token}`
