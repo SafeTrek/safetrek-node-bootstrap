@@ -32,6 +32,14 @@ const TOKEN_URL = 'https://login-sandbox.safetrek.io/oauth/token'
  */
 const API_URL = 'https://api-sandbox.safetrek.io'
 
+/**
+ * Default Callback path (with leading slash)
+ * This path is whitelisted on all herokuapp.com sub-domains.
+ * To get your custom domain or paths whitelisted, please contact us.
+ */
+
+const CALLBACK_PATH = '/callback'
+
 // Default scope. DO NOT ALTER.
 const SCOPE = 'openid phone offline_access'
 
@@ -73,16 +81,16 @@ app.set('view engine', 'pug')
 app.use(express.json())
 
 app.get(DEMO_URL, function (req, res) {
-  let appUrl = `${req.protocol}://${req.get('host')}/callback`
+  let appUrl = `${req.protocol}://${req.get('host')}${CALLBACK_PATH}`
   let client_id = CLIENT_ID || env.CLIENT_ID || ''
   res.render('index', {
     auth_url: `${AUTH_URL}/authorize?audience=${API_URL}&client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
   })
 })
 
-app.get('/callback', function (req, res) {
+app.get(CALLBACK_PATH, function (req, res) {
   if(req.query.code) {
-    let appUrl = `${req.protocol}://${req.get('host')}/callback`
+    let appUrl = `${req.protocol}://${req.get('host')}${CALLBACK_PATH}`
     let redirectUrl = REDIRECT_URL || env.REDIRECT_URL || DEMO_URL
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
@@ -94,7 +102,6 @@ app.get('/callback', function (req, res) {
         "redirect_uri": appUrl
       })
       .end((response) => {
-        log(response.body)
         if(response.body.access_token && response.body.refresh_token && redirectUrl) {
           res.redirect(`${redirectUrl}?authorization_code=${req.query.code}&access_token=${response.body.access_token}&refresh_token=${response.body.refresh_token}`)
         } else {
