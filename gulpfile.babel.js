@@ -7,7 +7,7 @@ import source from 'vinyl-source-stream'
 import buffer from 'vinyl-buffer'
 import uglify from 'gulp-uglify'
 import exorcist from 'exorcist'
-import ifElse from 'gulp-if-else'
+import ifElse from 'gulp-if'
 import browserSync from 'browser-sync'
 import merge from 'merge-stream'
 import nodemon from 'gulp-nodemon'
@@ -48,11 +48,11 @@ gulp.task('makeScript',() => {
       .transform('babelify')
       .bundle()
       .on('error', errorHandler('browserify'))
-      .pipe(exorcist(`public/scripts/${fileName}.js.map`))
+      .pipe(ifElse(process.env.NODE_ENV === 'development', exorcist(`public/scripts/${fileName}.js.map`)))
       .pipe(source(`${fileName}.js`))
       .pipe(plumber(errorHandler('makeScript')))
       .pipe(buffer())
-      .pipe(ifElse(process.env.NODE_ENV === 'production', uglify))
+      .pipe(ifElse(process.env.NODE_ENV === 'production', uglify()))
       .pipe(gulp.dest('public/scripts/'))
   }))
 })
@@ -67,8 +67,7 @@ gulp.task('startServer', function (cb) {
   nodemon({
     script: 'index.js',
     ext: 'js',
-    ignore: ['gulpfile.babel.js', 'public', 'views'],
-    env: { 'NODE_ENV': 'development' }
+    ignore: ['gulpfile.babel.js', 'public', 'views']
   }).on('start', function () {
     if (!started) {
       cb()
