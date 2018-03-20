@@ -1,0 +1,41 @@
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import 'materialize-css/sass/materialize';
+@import 'colors';
+
+.nav-wrapper, .btn {
+  background-color: $st-blue;
+}
+
+.btn:hover {
+  background-color: $st-blue-accent;
+}
+
+.brand-logo > img {
+  height: 30px;
+  margin: 18px 0 0 15px;
+}
+
+.alarm {
+  position: relative;
+  margin: 30px auto;
+  height: 200px;
+  width: 200px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background-color: $st-blue;
+  box-shadow: 0 0 12px 0 $st-blue;
+}
+
+.alarm-red {
+  background-color: $st-red;
+  box-shadow: 0 0 12px 0 $st-red;
+}
+
+footer {
+  padding: 10px;
+}
+
+code {
+  white-space: pre-wrap;
+}

@@ -1,6 +1,4 @@
 node_modules
-public/scripts/app.js
-public/scripts/app.js.map
-public/scripts/plugins.js
-public/scripts/plugins.js.map
-public/styles/style.css
+public/scripts/main.js
+public/scripts/main.js.map
+public/styles/main.css
