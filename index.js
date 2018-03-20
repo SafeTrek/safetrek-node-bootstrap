@@ -96,7 +96,7 @@ app.get(CALLBACK_PATH, function (req, res) {
     let redirectUrl =  REDIRECT_URL || env.REDIRECT_URL || ''
     let responseUrl =  redirectUrl || DEMO_URL
     // Pass authorization_code in query parameters for demo app only
-    let showAuthcode = redirectUrl ? true : false
+    let showAuthcode = redirectUrl ? false : true
 
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
