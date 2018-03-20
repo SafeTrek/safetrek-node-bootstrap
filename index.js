@@ -103,8 +103,8 @@ app.get(CALLBACK_PATH, function (req, res) {
         "redirect_uri": appUrl
       })
       .end((response) => {
-        if(response.body.access_token && response.body.refresh_token && redirectUrl) {
-          res.redirect(`${redirectUrl}?authorization_code=${req.query.code}&access_token=${response.body.access_token}&refresh_token=${response.body.refresh_token}`)
+        if(response.body.access_token && response.body.refresh_token && response.body.expires_in && redirectUrl) {
+          res.redirect(`${redirectUrl}?authorization_code=${req.query.code}&access_token=${response.body.access_token}&expires_in=${response.body.expires_in}&refresh_token=${response.body.refresh_token}`)
         } else {
           res.status(500).send('Internal Server Error. Something went wrong. Please try again')
         }
