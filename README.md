@@ -11,7 +11,14 @@ A bootstrap project to quickly get you started with the SafeTrek API using NodeJ
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/SafeTrek/safetrek-node-bootstrap)
 
 - **Step 4:** Open up the app and go through the demo if you're new to working with SafeTrek API. The console outputs can give additional information during the demo, so keep an eye out for that.
-- **STEP 5:** Go through the code to better understand how everything works. Create issues if you have any queries or find any bugs.
+- **Step 5:** Go through the code to better understand how everything works.
+- **Step 6:** Fork this repo to your own GitHub account.connect it to your Heroku app from the **Deploy** menu. 
+- **Step 7:** Connect the forked repo to your Heroku app from the **Deploy** menu on Heroku's dashboard. (`https://dashboard.heroku.com/apps/<your-app>/deploy/github`)
+- **Step 8:** Now you can deploy any branch from your forked repo to your Heroku app. You can even setup auto-deploy if you want. All that's left to do is cloning your forked repo and pushing some changes!
+
+If you have any queries, suggestions or bug reports, feel free to [create an issue](https://github.com/SafeTrek/safetrek-node-bootstrap/issues/new).
+
+Good Luck!
 
 ### More Info
 
