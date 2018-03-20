@@ -1,0 +1,121 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    title SafeTrek Node Bootstrap Demo
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css')
+    link(rel='stylesheet' type='text/css' media='screen' href='/styles/main.css')
+  body
+    .navbar-fixed
+      nav
+        .nav-wrapper
+          a.brand-logo(href='/demo')
+            img(src='/assets/images/safetrek-logo-white.png' alt='SafeTrek')
+          a.button-collapse(href='#' data-activates='mobile-nav')
+            i.material-icons menu
+          ul#nav-mobile.right.hide-on-med-and-down
+            li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
+            li: a(target='_blank' href='https://docs.safetrek.io') Docs
+          ul#mobile-nav.side-nav
+            li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
+            li: a(target='_blank' href='https://docs.safetrek.io') Docs
+    .container
+      .row
+        .col.s12
+          p.flow-text
+            | This demo and the underlying app can be used to simplify, understand and debug the authorization flow used by SafeTrek API.
+            | You can bootstrap your projects with this app to quickly set them up for consuming the SafeTrek API.
+          .section
+            h5.grey-text.text-darken-1 Step 1
+            .divider
+            p
+              | First step is to request SafeTrek to authenticate your app and your user by providing you with an 
+              code authorization_code
+              | . The code will then be exchanged by this app with SafeTrek authorization server for an 
+              code access_token
+              |  and a 
+              code refresh_token
+              | . The retrieved code and tokens will be available for your reference in Step 2.
+            .row
+              .col.s12.m4.offset-m4.center-align
+                a.safetrek-btn(href=auth_url)
+                  img.responsive-img(src='/assets/images/safetrek-connect-button.png' alt='Connect to SafeTrek')
+                .connecting.hide
+                  h5.blue-text.text-darken-4 Connecting...
+                  .progress.blue.darken-3: .indeterminate.blue.darken-1
+      .row
+        .col.s12
+          .section
+            h5.grey-text.text-darken-1 Step 2
+            .divider
+            p
+              | Once you have the access and refresh tokens, you can use the 
+              code refresh_token
+              |  to get a new 
+              code access_token
+              | . This is useful because access tokens have limited validity, while refresh tokens don't expire. Make sure to keep your refresh tokens safe.
+              | Access tokens are used frequently in the headers for making secure requests and hence are prone to theft and misuse. Limited validity thus makes them secure.
+              | Errors and state changes are logged to the console.
+            div
+              code authorization_code
+              input#authorization_code.display-only(type='text')
+              code refresh_token
+              input#refresh_token.display-only(type='text')
+              code access_token
+              input#access_token.display-only(type='text')
+              button.btn.waves-effect.waves-light.new-token(type='button') Get New
+      .row
+        .col.s12
+          .section
+            h5.grey-text.text-darken-1 Step 3
+            .divider
+            p
+              | Now you can use the 
+              code access_token
+              |  to make a secure requests to SafeTrek on behalf of your user.
+              | In this step, you will create an alarm for your authorized user.
+              | The sandbox server will be used for this example request.
+              | Locations used are random and based off of a static JSON data source.
+              | Errors and state changes are logged to the console.
+            .row
+              .col.s12.m6
+                .card
+                  .card-content
+                    .card-title Request
+                    br
+                    code.
+                      POST https://api-sandbox.safetrek.io/v1/alarms
+                      Authorization: Bearer                         
+                      Content-Type: application/json
+
+
+                    code.alarm-request.
+                      {
+                        "services": {
+                          "police": true,
+                          "fire": false,
+                          "medical": false
+                        },
+                        "location.coordinates": {
+                          "lat": 34.32334,
+                          "lng": -117.3343,
+                          "accuracy": 5
+                        }
+                      }
+                  .card-action
+                    a.blue-text.text-darken-3.use-addr(href='#') Use Address
+                    a.blue-text.text-darken-3.use-coords.hide(href='#') Use Coordinates
+                    br.hide-on-med-and-up
+                    a.blue-text.text-darken-3.make-alarm-request(href='#') Make Request
+              .col.s12.m6
+                .card
+                  .card-content.center-align
+                    .card-title Alarm Status
+                    .alarm
+                    p.alarm-status
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js')
+    script(src='/scripts/main.js')

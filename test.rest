@@ -1,0 +1,13 @@
+https://account-sandbox.safetrek.io/authorize?audience=https://api-sandbox.safetrek.io&client_id=joZXQTA1wbsq5dX12sI9JfF1CXW7h3AK&scope=openid phone offline_access&state=randomstring&response_type=code&redirect_uri=https://stnb-test.herokuapp.com
+
+###
+
+POST https://login-sandbox.safetrek.io/oauth/token HTTP/1.1
+Content-Type: application/json
+
+{
+  "grant_type": "refresh_token",
+  "refresh_token": "lvUvRxP5_dGClkR5Rvh0ofhI1KwhPOjGaWwHq8_eaI8kY",
+  "client_id": "joZXQTA1wbsq5dX12sI9JfF1CXW7h3AK",
+  "client_secret": "6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-FMPSg8M"
+}

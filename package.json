@@ -1,0 +1,25 @@
+{
+  "name": "safetrek-node-bootstrap",
+  "version": "1.0.0",
+  "description": "A bootstrap project to quickly get you started with the SafeTrek API using NodeJS.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SafeTrek/safetrek-node-bootstrap.git"
+  },
+  "author": "SafeTrek",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/SafeTrek/safetrek-node-bootstrap/issues"
+  },
+  "homepage": "https://github.com/SafeTrek/safetrek-node-bootstrap#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "pug": "^2.0.1",
+    "unirest": "^0.5.1"
+  }
+}

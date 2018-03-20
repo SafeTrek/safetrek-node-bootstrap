@@ -1,0 +1,28 @@
+{
+  "name": "SafeTrek Node Bootstrap",
+  "description": "A bootstrap project to quickly get you started with the SafeTrek API using NodeJS.",
+  "logo": "https://www.dropbox.com/s/q2m61cpfm5w0cm4/safetrek-app-icon.png?raw=1",
+  "keywords": [
+    "safetrek",
+    "oauth",
+    "nodejs",
+    "heroku",
+    "bootstrap"
+  ],
+  "website": "https://developers.safetrek.io/",
+  "repository": "https://github.com/SafeTrek/safetrek-node-bootstrap",
+  "env": {
+    "CLIENT_ID": {
+      "description": "The client id for your application provided to you by SafeTrek",
+      "required": true
+    },
+    "CLIENT_SECRET": {
+      "description": "The client secret for your application provided to you by SafeTrek",
+      "required": true
+    },
+    "REDIRECT_URL": {
+      "description": "The URL you want to redirect to after retrieving your 'access_token' and 'refresh_token'. Leave blank if you're not sure or want to use the Demo redirect URL.",
+      "required": false
+    }
+  }
+}
