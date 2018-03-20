@@ -48,7 +48,7 @@ gulp.task('makeScript',() => {
       .transform('babelify')
       .bundle()
       .on('error', errorHandler('browserify'))
-      .pipe(ifElse(process.env.NODE_ENV === 'development', exorcist(`public/scripts/${fileName}.js.map`)))
+      .pipe(exorcist(`public/scripts/${fileName}.js.map`))
       .pipe(source(`${fileName}.js`))
       .pipe(plumber(errorHandler('makeScript')))
       .pipe(buffer())

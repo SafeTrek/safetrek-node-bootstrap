@@ -4,7 +4,8 @@
   "description": "A bootstrap project to quickly get you started with the SafeTrek API using NodeJS.",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development gulp watch"
+    "start": "gulp watch",
+    "postinstall": "gulp watch"
   },
   "repository": {
     "type": "git",
