@@ -89,4 +89,4 @@ gulp.task('watch', ['makeStyle','makeScript','startServer'], () => {
   gulp.watch(['public/*.pug'], () => { bs.reload() })
 })
 
-gulp.task('default', ['watch'])
+gulp.task('default', ['makeStyle','makeScript'])
