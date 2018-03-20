@@ -113,7 +113,7 @@ app.get(CALLBACK_PATH, function (req, res) {
           redirectLink += `access_token=${response.body.access_token}`
           redirectLink += `&expires_in=${response.body.expires_in}`
           redirectLink += `&refresh_token=${response.body.refresh_token}`
-          redirectLink += showAuthcode ? `authorization_code=${req.query.code}` : '' // For demo app only
+          redirectLink += showAuthcode ? `&authorization_code=${req.query.code}` : '' // For demo app only
           res.redirect(redirectLink)
         } else {
           res.status(500).send('Internal Server Error. Something went wrong. Please try again')
