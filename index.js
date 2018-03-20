@@ -109,7 +109,7 @@ app.get(CALLBACK_PATH, function (req, res) {
       })
       .end((response) => {
         if(response.body.access_token && response.body.refresh_token && response.body.expires_in && responseUrl) {
-          let redirectLink = `responseUrl?`
+          let redirectLink = `${responseUrl}?`
           redirectLink += `access_token=${response.body.access_token}`
           redirectLink += `&expires_in=${response.body.expires_in}`
           redirectLink += `&refresh_token=${response.body.refresh_token}`
