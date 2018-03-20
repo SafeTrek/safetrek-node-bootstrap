@@ -39,10 +39,10 @@ const SCOPE = 'openid phone offline_access'
 const RESPONSE_TYPE = 'code'
 
 // Enter your SafeTrek client id.
-const CLIENT_ID = 'joZXQTA1wbsq5dX12sI9JfF1CXW7h3AK'
+const CLIENT_ID = ''
 
 // Enter your client secret.
-const CLIENT_SECRET = '6dBPaJ7QqYdwmG83QRVeEf2guUJV7Ys_dGNwYOR0AKSMSe_fpzA28sQb-FMPSg8M'
+const CLIENT_SECRET = ''
 
 // Enter where you want to redirect after retrieving your 'access_token' and 'refresh_token'.
 // For debugging, you can set this to be a RequestBin URL from https://requestb.in
@@ -73,9 +73,8 @@ app.set('view engine', 'pug')
 app.use(express.json())
 
 app.get(DEMO_URL, function (req, res) {
-  let appUrl = `${req.protocol}://${req.get('host')}`
+  let appUrl = `${req.protocol}://${req.get('host')}/callback`
   let client_id = CLIENT_ID || env.CLIENT_ID || ''
-  let client_secret = CLIENT_SECRET || env.CLIENT_SECRET || ''
   res.render('index', {
     auth_url: `${AUTH_URL}/authorize?audience=${API_URL}&client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
   })
@@ -83,7 +82,7 @@ app.get(DEMO_URL, function (req, res) {
 
 app.get('/callback', function (req, res) {
   if(req.query.code) {
-    let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}/callback`
+    let appUrl = `${req.protocol}://${req.get('host')}/callback`
     let redirectUrl = REDIRECT_URL || env.REDIRECT_URL || DEMO_URL
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
