@@ -83,7 +83,7 @@ app.get(DEMO_URL, function (req, res) {
 
 app.get('/callback', function (req, res) {
   if(req.query.code) {
-    let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+    let appUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}/callback`
     let redirectUrl = REDIRECT_URL || env.REDIRECT_URL || DEMO_URL
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
