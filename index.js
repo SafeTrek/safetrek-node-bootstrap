@@ -26,13 +26,6 @@ const AUTH_URL = 'https://account-sandbox.safetrek.io'
 const TOKEN_URL = 'https://login-sandbox.safetrek.io/oauth/token'
 
 /**
- * SafeTrek API base URL
- * Production: https://api.safetrek.io
- * Sandbox: https://api-sandbox.safetrek.io
- */
-const API_URL = 'https://api-sandbox.safetrek.io'
-
-/**
  * Default Callback path (with leading slash)
  * This path is whitelisted on all herokuapp.com sub-domains.
  * To get your custom domain or paths whitelisted, please contact us.
@@ -86,7 +79,7 @@ app.get(DEMO_URL, function (req, res) {
   let client_id = CLIENT_ID || env.CLIENT_ID || ''
   res.render('index', {
     company_name: 'SafeTrek',
-    auth_url: `${AUTH_URL}/authorize?audience=${API_URL}&client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
+    auth_url: `${AUTH_URL}/authorize?client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
   })
 })
 

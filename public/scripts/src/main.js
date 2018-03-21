@@ -5,7 +5,7 @@ import 'materialize-css'
 $(function(){
 
   const CALLBACK_URL =  '/callback'
-  const SAFETREK_API_URL =  'https://api-sandbox.safetrek.io/v1/alarms'
+  const SAFETREK_API_URL =  'https://api-sandbox.safetrek.io/v1'
   const DEFAULT_ACCURACY =  5
   const RANDOM_ADDRESS_DATA = '/address-us-100.min.json'
 
@@ -93,7 +93,7 @@ $(function(){
         $('.alarm').removeClass('alarm-red')
         $('.alarm-status').text('Requesting...')
         state.set('status', 'processing')
-        let url = SAFETREK_API_URL
+        let url = SAFETREK_API_URL + '/alarms'
         let data = $('code.alarm-request').text()
         log('Requesting Alarm creation with data:\n', data)
         $.ajax({
