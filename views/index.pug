@@ -11,7 +11,7 @@ html
       nav
         .nav-wrapper
           a.brand-logo(href='#!')
-            img(src='/assets/images/safetrek-logo-white.png' alt='#{company_name}')
+            img(src='/assets/images/safetrek-logo-white.svg' alt='#{company_name}')
           a.button-collapse(href='#' data-activates='mobile-nav')
             i.material-icons menu
           ul.right.hide-on-med-and-down
@@ -40,10 +40,10 @@ html
             .row
               .col.s12.m4.offset-m4.center-align
                 a.safetrek-btn(href=auth_url)
-                  img.responsive-img(src='/assets/images/safetrek-connect-button.png' alt='Connect to #{company_name}')
-                .connecting.hide
-                  h5.blue-text.text-darken-4 Connecting...
-                  .progress.blue.darken-3: .indeterminate.blue.darken-1
+                  img.responsive-img(
+                    src='/assets/images/safetrek-connect-button.svg'
+                    data-disc-src='/assets/images/safetrek-disconnect-button.svg'
+                    alt='#{company_name} connection button')
       .row
         .col.s12
           .section

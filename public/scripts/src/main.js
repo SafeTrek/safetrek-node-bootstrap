@@ -44,8 +44,10 @@ $(function(){
 
   if(state.get('authorization_code')) {
     state.set('status', 'connected')
+    let btn = $('a.safetrek-btn > img')
+    let discBtnImg = $('a.safetrek-btn > img').attr('data-disc-src')
     log('SafeTrek is connected! Current State:', state)
-    $('a.safetrek-btn > img').attr('src', '/assets/images/safetrek-disconnect-button.png')
+    btn.attr('src', discBtnImg)
     $('input#authorization_code').val(state.get('authorization_code'))
     $('input#access_token').val(state.get('access_token'))
     $('input#refresh_token').val(state.get('refresh_token'))
