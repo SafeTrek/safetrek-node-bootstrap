@@ -8,7 +8,7 @@ A bootstrap project to quickly get you started with the SafeTrek API using NodeJ
  - **Step 2:** [Create](https://www.heroku.com/) a free Heroku account, if you don't have one already.
  - **Step 3:** Use the *Deploy to Heroku* button below to create your new app off of this repository. Give your app a name and fill in your SafeTrek API credentials that you received from *Step 1*. Fill in the `REDIRECT_URL` only if you know what you're doing. If this is your first time using this repo, leave it blank.
 <p align="center">
- <a href='https://heroku.com/deploy?template=https://github.com/SafeTrek/safetrek-node-bootstrap' target="_blank">
+ <a href='https://heroku.com/deploy?template=https://github.com/SafeTrek/safetrek-node-bootstrap'>
   <img src='https://www.herokucdn.com/deploy/button.svg' alt='Deploy'>
  </a>
 </p>
