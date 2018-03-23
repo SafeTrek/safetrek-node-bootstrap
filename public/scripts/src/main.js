@@ -74,7 +74,7 @@ $(function(){
         url += that.attr('data-port')
         url += that.attr('data-callback')
       } else {
-        let url = that.attr('data-href')
+        url = that.attr('data-href')
         url += that.attr('data-redirect')
       }
       location.href = url
