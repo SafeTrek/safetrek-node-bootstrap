@@ -1,10 +1,23 @@
 const express = require('express')
 const unirest = require('unirest')
+const dotenv = require('dotenv')
 
 const app = express()
 const env = process.env
 const log = console.log
+// Set your port number for localhost
+// Could be 3000, 5000, 8000 or 8080. Other ports are not whitelisted.
 const port = env.PORT || 5000
+
+/** 
+ * Load environment variables from .env file
+ * when running in a non-production environment.
+ * When running on localhost, create a ".env" file in the
+ * root directory, and provide the following:-
+ * CLIENT_ID=<value>
+ * CLIENT_SECRET=<value>
+ */ 
+if (env.NODE_ENV !== 'production') dotenv.config()
 
 /**
  * CONFIGURATION
@@ -39,14 +52,22 @@ const SCOPE = 'openid phone offline_access'
 // Default response type. DO NOT ALTER.
 const RESPONSE_TYPE = 'code'
 
-// Enter your SafeTrek client id.
-const CLIENT_ID = ''
+/**
+ * Your SafeTrek Client ID (read from the environment)
+ * Set it in a ".env" file in the root directory if running on localhost
+ * DO NOT enter it below! You might accidentally commit and make it public.
+ */
+const CLIENT_ID = env.CLIENT_ID || ''
 
-// Enter your client secret.
-const CLIENT_SECRET = ''
+/**
+ * Your SafeTrek Client Secret (read from the environment)
+ * Set it in a ".env" file in the root directory if running on localhost
+ * DO NOT enter it below! You might accidentally commit and make it public.
+ */
+const CLIENT_SECRET = env.CLIENT_SECRET || ''
 
 // Enter where you want to redirect after retrieving your 'access_token' and 'refresh_token'.
-// Should have trailing slash
+// Should have a trailing slash. Read from environment if not set below.
 // For debugging, you can set this to be a RequestBin URL from https://requestb.in
 const REDIRECT_URL = ''
 
@@ -76,10 +97,15 @@ app.use(express.json())
 
 app.get(DEMO_URL, function (req, res) {
   let appUrl = `${req.protocol}://${req.get('host')}${CALLBACK_PATH}`
-  let client_id = CLIENT_ID || env.CLIENT_ID || ''
+  let localhost = req.hostname === 'localhost' ? 'true' : 'false'
   res.render('index', {
     company_name: 'SafeTrek',
-    auth_url: `${AUTH_URL}/authorize?client_id=${client_id}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=${appUrl}`
+    auth_url: `${AUTH_URL}/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`,
+    redirect_uri: appUrl,
+    protocol: req.protocol,
+    callback: CALLBACK_PATH,
+    localhost: localhost,
+    port: port
   })
 })
 
@@ -90,14 +116,14 @@ app.get(CALLBACK_PATH, function (req, res) {
     let responseUrl =  redirectUrl || DEMO_URL
     // Pass authorization_code in query parameters for demo app only
     let showAuthcode = redirectUrl ? false : true
-
+    
     unirest.post(TOKEN_URL)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
       .send({
         "grant_type": "authorization_code",
         "code": req.query.code,
-        "client_id": CLIENT_ID || env.CLIENT_ID || "",
-        "client_secret": CLIENT_SECRET || env.CLIENT_SECRET || "",
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
         "redirect_uri": appUrl
       })
       .end((response) => {
@@ -118,8 +144,8 @@ app.get(CALLBACK_PATH, function (req, res) {
       .send({
         "grant_type": "refresh_token",
         "refresh_token": req.query.refresh_token,
-        "client_id": CLIENT_ID || env.CLIENT_ID || "",
-        "client_secret": CLIENT_SECRET || env.CLIENT_SECRET || ""
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET
       })
       .end((response) => {
         if(response.body.access_token && response.body.expires_in) {

@@ -73,6 +73,8 @@ gulp.task('startServer', function (cb) {
       cb()
       started = true
     }
+  }).on('restart', function () {
+    bs.reload()
   })
 })
 
@@ -86,7 +88,7 @@ gulp.task('watch', ['makeStyle','makeScript','startServer'], () => {
 
   gulp.watch(['public/styles/src/**/**/**'], ['makeStyle'])
   gulp.watch(['public/scripts/src/**/**/**'], ['scriptWatch'])
-  gulp.watch(['public/*.pug'], () => { bs.reload() })
+  gulp.watch(['views/*.pug'], () => { bs.reload() })
 })
 
 gulp.task('default', ['makeStyle','makeScript'])
