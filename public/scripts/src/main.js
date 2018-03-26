@@ -62,10 +62,24 @@ $(function(){
 
   // Disconnect from SafeTrek. Clear all data and reload page.
   $('a.safetrek-btn').on('click', function(e){
+    e.preventDefault()
+    let that = $(this)
     if(state.get('status') !== 'disconnected') {
-      e.preventDefault()
       ls.clear()
       location.href = location.origin + location.pathname
+    } else {
+      let url = ''
+      if(that.attr('data-localhost') === 'true') {
+        url = that.attr('data-href')
+        url += that.attr('data-protocol')
+        url += '://localhost:'
+        url += that.attr('data-port')
+        url += that.attr('data-callback')
+      } else {
+        url = that.attr('data-href')
+        url += that.attr('data-redirect')
+      }
+      location.href = url
     }
   })
 

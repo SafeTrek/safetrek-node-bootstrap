@@ -4,7 +4,7 @@
   "description": "A bootstrap project to quickly get you started with the SafeTrek API using NodeJS.",
   "main": "index.js",
   "scripts": {
-    "start": "gulp watch",
+    "start": "NODE_ENV=development gulp watch",
     "postinstall": "gulp"
   },
   "repository": {
@@ -18,12 +18,12 @@
   },
   "homepage": "https://github.com/SafeTrek/safetrek-node-bootstrap#readme",
   "devDependencies": {
+    "ajv": "^5.0.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babelify": "^8.0.0",
     "browser-sync": "^2.23.6",
     "browserify": "^16.1.1",
-    "ajv": "^5.0.0",
     "dotenv": "^5.0.1",
     "eslint": "^4.19.0",
     "exorcist": "^1.0.1",

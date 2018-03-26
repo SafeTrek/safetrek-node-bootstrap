@@ -39,7 +39,15 @@ html
               | . The retrieved code and tokens will be available for your reference in Step 2.
             .row
               .col.s12.m4.offset-m4.center-align
-                a.safetrek-btn(href=auth_url)
+                a.safetrek-btn(
+                    href='#'
+                    data-href=auth_url
+                    data-redirect=redirect_uri
+                    data-protocol=protocol
+                    data-localhost=localhost
+                    data-port=port
+                    data-callback=callback
+                  )
                   img.responsive-img(
                     src='https://s3.us-east-2.amazonaws.com/safetrek-assets/safetrek-btn-connect.svg'
                     data-disc-src='https://s3.us-east-2.amazonaws.com/safetrek-assets/safetrek-btn-disconnect.svg'
