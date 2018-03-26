@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import 'variables';
 @import 'materialize-css/sass/materialize';
 @import 'colors';
 @import 'generic';
@@ -13,7 +14,6 @@ body {
 
 main.container {
   padding: 0 2.5%;
-
 }
 
 .container {
