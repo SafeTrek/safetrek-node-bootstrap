@@ -1,0 +1,44 @@
+@each $size in 10, 20, 30, 40, 50, 100 {
+  .mt-#{$size} {
+    margin-top: #{$size}px;
+  }
+  .mb-#{$size} {
+    margin-bottom: #{$size}px;
+  }
+  .ml-#{$size} {
+    margin-left: #{$size}px;
+  }
+  .mr-#{$size} {
+    margin-right: #{$size}px;
+  }
+  .mx-#{$size} {
+    margin: 0 #{$size}px;
+  }
+  .my-#{$size} {
+    margin: #{$size}px 0;
+  }
+  .m-#{$size} {
+    margin: #{$size}px;
+  }
+  .pt-#{$size} {
+    padding-top: #{$size}px;
+  }
+  .pb-#{$size} {
+    padding-bottom: #{$size}px;
+  }
+  .pl-#{$size} {
+    padding-left: #{$size}px;
+  }
+  .pr-#{$size} {
+    padding-right: #{$size}px;
+  }
+  .px-#{$size} {
+    padding: 0 #{$size}px;
+  }
+  .py-#{$size} {
+    padding: #{$size}px 0;
+  }
+  .p-#{$size} {
+    padding: #{$size}px 0;
+  }
+}
