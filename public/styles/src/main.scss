@@ -1,9 +1,30 @@
-
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import 'materialize-css/sass/materialize';
 @import 'colors';
+@import 'generic';
+@import 'animations';
 
-.nav-wrapper, .btn {
+body {
+  background-color: #F5F6FA;
+  @media only screen and (max-width: 640px) {
+    background-color: $white;
+  }
+}
+
+main.container {
+  padding: 0 2.5%;
+
+}
+
+.container {
+  background-color: #FFF;
+  box-shadow: 0px 0px 13px -8px $shadow;
+  @media only screen and (max-width: 640px) {
+    box-shadow: none;
+  }
+}
+
+nav, .btn {
   background-color: $st-blue;
 }
 
@@ -19,17 +40,16 @@
 .alarm {
   position: relative;
   margin: 30px auto;
-  height: 200px;
-  width: 200px;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
   background-color: $st-blue;
-  box-shadow: 0 0 12px 0 $st-blue;
 }
 
 .alarm-red {
   background-color: $st-red;
-  box-shadow: 0 0 12px 0 $st-red;
+  box-shadow: 0 0 0 $st-red-accent;
+  animation: pulse 1.2s infinite;
 }
 
 footer {
