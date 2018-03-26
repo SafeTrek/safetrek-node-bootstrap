@@ -7,6 +7,11 @@ html
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(rel='shortcut icon' href='https://s3.us-east-2.amazonaws.com/safetrek-assets/safetrek-favicon.ico' type='image/x-icon')
     link(rel='stylesheet' type='text/css' media='screen' href='/styles/main.css')
+
+<!-- Pug Variables -->
+- var navItem1 = 'GitHub';
+- var navItem2 = 'Documentation';
+  
   body
     .navbar-fixed
       nav
@@ -17,11 +22,11 @@ html
             a.button-collapse(href='#' data-activates='mobile-nav')
               i.material-icons menu
             ul.right.hide-on-med-and-down
-              li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
-              li: a(target='_blank' href='https://docs.safetrek.io') Docs
+              li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') #{navItem1}
+              li: a(target='_blank' href='https://docs.safetrek.io') #{navItem2}
     ul#mobile-nav.side-nav
-      li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') Source
-      li: a(target='_blank' href='https://docs.safetrek.io') Docs
+      li: a(target='_blank' href='https://github.com/SafeTrek/safetrek-node-bootstrap') #{navItem1}
+      li: a(target='_blank' href='https://docs.safetrek.io') #{navItem2}
     main.container
       .row
         .col.s12.mt-50
