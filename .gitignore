@@ -2,4 +2,5 @@ node_modules
 public/scripts/main.js
 public/scripts/main.js.map
 public/styles/main.css
+.DS_Store
 .env
