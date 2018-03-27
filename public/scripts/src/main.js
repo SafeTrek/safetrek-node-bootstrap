@@ -168,6 +168,7 @@ $(function(){
             }
           })
         } else {
+          M.toast('SafeTrek needs to be connected.', 2000)
           logErr('No valid access_token found! Connect to SafeTrek before requesting Alarm creation.')
         }
       }
@@ -197,6 +198,7 @@ $(function(){
         that.addClass('hide')
         $('.use-coords').removeClass('hide')
         log('Using random location address.')
+        M.toast('Using random location address.', 1500)
       })
     })
 
@@ -222,6 +224,7 @@ $(function(){
         that.addClass('hide')
         $('.use-addr').removeClass('hide')
         log('Using random location coordinates.')
+        M.toast('Using random location coordinates.', 1500)
       })
     })
 
