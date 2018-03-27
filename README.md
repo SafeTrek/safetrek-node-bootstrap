@@ -37,6 +37,8 @@ CLIENT_ID=<your-client-id>
 CLIENT_SECRET=<your-client-secret>
 ```
 
+- Make sure you have [npm](https://www.npmjs.com/get-npm) installed on your system.
+
 - Next, execute `npm install` followed by `npm start`
 
 What life-saving integration will you create?
