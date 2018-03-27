@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import Hammer from 'hammerjs'
-import 'materialize-css'
+import Materialize from 'materialize-css'
+
+const M =  window.Materialize
 
 $(function(){
   
@@ -18,10 +20,18 @@ $(function(){
   const logErr = console.error
   const logWarn = console.warn
   let state = new Map
+
   const setState = (key, val, verbose = false) => {
     ls.setItem(key, val)
     state.set(key, val)
     if (verbose) log('State changed!', `${key} has new value. Current State:\n`, state)
+  }
+
+  const copyAccessToken = () => {
+    $('input#access_token').focus().select()
+    document.execCommand('Copy')
+    $('input#access_token').blur()
+    M.toast('Access token copied !', 2000)
   }
 
   // Redirect to browser-sync proxy port
@@ -43,6 +53,7 @@ $(function(){
 
     // Materialize Components Initialization
     $('.button-collapse').sideNav()
+    $('.tooltipped').tooltip()
 
     // Update state based on query params
     if(urlParam('authorization_code') && urlParam('access_token') && urlParam('refresh_token')) {
@@ -56,12 +67,15 @@ $(function(){
       let btn = $('a.safetrek-btn > img')
       let discBtnImg = $('a.safetrek-btn > img').attr('data-disc-src')
       log('SafeTrek is connected! Current State:', state)
+      M.toast('SafeTrek is connected !', 2000)
       btn.attr('src', discBtnImg)
       $('input#authorization_code').val(state.get('authorization_code'))
       $('input#access_token').val(state.get('access_token'))
+      $('span.access_token').text(state.get('access_token').substr(0,15) + '...')
       $('input#refresh_token').val(state.get('refresh_token'))
     } else {
       logWarn('SafeTrek is not connected! Current State:\n', state)
+      M.toast('SafeTrek is not connected !', 2000)
     }
 
     // Prevent changing code and token field values
@@ -96,6 +110,7 @@ $(function(){
     $('.new-token').on('click', function() {
       let that = $(this)
       that.prop('disabled', true)
+      $('input#access_token').prop('disabled', true).val('')
       let url = `${CALLBACK_URL}?refresh_token=${state.get('refresh_token')}`
       $.ajax({
         url: url,
@@ -105,14 +120,19 @@ $(function(){
           $('input#access_token').val(data.access_token)
         },
         error: (xhr, status, err) => { logErr('Error:', err) },
-        complete: () => { that.prop('disabled', false) }
+        complete: () => { 
+          that.prop('disabled', false)
+          $('input#access_token').prop('disabled', false)
+          M.toast('Access token refreshed !', 2000)
+        }
       })
     })
 
     $('a.make-alarm-request').on('click', function(e) {
       e.preventDefault()
       if (state.get('status') === 'active-alarm') {
-        log('Alarm status is currently active and will reset in 10s or less.')
+        log('Alarm is currently active and will reset in 10s or less.')
+        M.toast('Alarm is currently active and will reset in 10s or less.', 1500)
       } else if(state.get('status') !== 'processing') {
         if(state.get('access_token')) {
           $('.alarm').removeClass('alarm-red')
@@ -133,16 +153,17 @@ $(function(){
             success: (data) => {
               log('Alarm created successfully! Server response:\n', JSON.stringify(data, null, 2), '\nAlarm status will reset in 10s.')
               $('.alarm').addClass('alarm-red')
-              $('.alarm-status').text('Alarm created! Check console for JSON response.')
+              M.toast('Alarm Created! Will reset in 10s.<br>Check console for JSON response.', 2000)
             },
             error: (xhr, status, err) => { logErr('Error:', err) },
             complete: () => {
               state.set('status', 'active-alarm')
+              $('.alarm-status').text('')
               setTimeout(() => {
                 state.set('status', 'connected')
                 $('.alarm').removeClass('alarm-red')
-                $('.alarm-status').text('')
                 log('Alarm status reset!')
+                M.toast('Alarm Reset !', 2000)
               }, 10000)
             }
           })
@@ -204,6 +225,9 @@ $(function(){
       })
     })
 
-  } //
+    $('span.access_token, button.copy-token').on('click', function(){
+      copyAccessToken()
+    })
 
+  }
 })
