@@ -8,7 +8,6 @@ html
     link(rel='shortcut icon' href='https://s3.us-east-2.amazonaws.com/safetrek-assets/safetrek-favicon.ico' type='image/x-icon')
     link(rel='stylesheet' type='text/css' media='screen' href='/styles/main.css')
 
-<!-- Pug Variables -->
 - var navItem1 = 'GitHub';
 - var navItem2 = 'Documentation';
   
@@ -78,7 +77,12 @@ html
               input#refresh_token.display-only(type='text')
               code access_token
               input#access_token.display-only(type='text')
-              button.btn.waves-effect.waves-light.new-token(type='button') Get New
+              button.btn.waves-effect.waves-light.copy-token.mr-30.mb-10(type='button') Copy Token
+              button.btn.waves-effect.waves-light.new-token.tooltipped(
+                type='button'
+                data-position='bottom'
+                data-tooltip='Exchange your refresh_token for a new access_token'
+              ) Refresh Token
       .row
         .col.s12
           .section
@@ -97,10 +101,12 @@ html
                   .card-content
                     .card-title Request
                     br
-                    code.
-                      POST https://api-sandbox.safetrek.io/v1/alarms
-                      Authorization: Bearer
-                      Content-Type: application/json
+                    code
+                      | POST https://api-sandbox.safetrek.io/v1/alarms
+                      | Authorization: Bearer 
+                      span.access_token.blue-text.text-darken-3
+                      |
+                      | Content-Type: application/json
 
 
                     code.alarm-request.
