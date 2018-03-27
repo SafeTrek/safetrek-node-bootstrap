@@ -3,7 +3,7 @@ import Hammer from 'hammerjs'
 import 'materialize-css'
 
 $(function(){
-
+  
   // Set to 'true' to enforce BrowserSync proxy port redirection
   const PROXY_SWITCH = true
   const PROXY_PORT = 3000
@@ -25,7 +25,7 @@ $(function(){
   }
 
   // Redirect to browser-sync proxy port
-  if(location.port == 5000 && PROXY_SWITCH) {
+  if(location.hostname == 'localhost' && +location.port !== PROXY_PORT && PROXY_SWITCH) {
     location.port = PROXY_PORT
   } else {
 
