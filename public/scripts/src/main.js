@@ -25,7 +25,7 @@ $(function(){
   }
 
   // Redirect to browser-sync proxy port
-  if(location.hostname == 'localhost' && +location.port !== PROXY_PORT && PROXY_SWITCH) {
+  if(location.hostname === 'localhost' && +location.port !== PROXY_PORT && PROXY_SWITCH) {
     location.port = PROXY_PORT
   } else {
 
